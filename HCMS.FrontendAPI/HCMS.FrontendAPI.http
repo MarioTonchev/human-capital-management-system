@@ -1,0 +1,6 @@
+@HCMS.FrontendAPI_HostAddress = http://localhost:5149
+
+GET {{HCMS.FrontendAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
