@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static HCMS.Infrastructure.Constants.EntityConstants.DepartmentConstants;
 
 namespace HCMS.Infrastructure.Entities
 {
@@ -7,9 +8,9 @@ namespace HCMS.Infrastructure.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required, MaxLength(DepartmentNameMaxLength)]
         public string Name { get; set; } = default!;
 
-        public ICollection<Employee>? Employees { get; set; }
+        public ICollection<Employee>? Employees { get; set; } = new List<Employee>();
     }
 }

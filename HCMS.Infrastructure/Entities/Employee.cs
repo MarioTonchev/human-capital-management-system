@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static HCMS.Infrastructure.Constants.EntityConstants.EmployeeConstants;
 
 namespace HCMS.Infrastructure.Entities
 {
@@ -8,19 +9,20 @@ namespace HCMS.Infrastructure.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(EmployeeFirstNameMaxLength)]
         public string FirstName { get; set; } = default!;
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(EmployeeLastNameMaxLength)]
         public string LastName { get; set; } = default!;
 
-        [Required, EmailAddress, MaxLength(100)]
+        [Required, EmailAddress, MaxLength(EmployeeEmailMaxLength)]
         public string Email { get; set; } = default!;
 
-        [Required, MaxLength(100)]
-        public string JobTitle { get; set; } = default!; //maybe make it an enum
+        [Required, MaxLength(EmployeeJobTitleMaxLength)]
+        public string JobTitle { get; set; } = default!;
 
         [Required, Column(TypeName = "decimal(18,2)")]
+        [Range(0, double.MaxValue, ErrorMessage = "Salary must be non-negative")]
         public decimal Salary { get; set; }
 
         public int? DepartmentId { get; set; }
