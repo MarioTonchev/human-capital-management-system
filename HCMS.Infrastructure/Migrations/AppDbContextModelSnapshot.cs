@@ -107,19 +107,7 @@ namespace HCMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "IT"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "HR"
-                        });
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("HCMS.Infrastructure.Entities.Employee", b =>
@@ -160,39 +148,7 @@ namespace HCMS.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DepartmentId = 1,
-                            Email = "pesho@gmail.com",
-                            FirstName = "Pesho",
-                            JobTitle = "Software Developer",
-                            LastName = "Peshov",
-                            Salary = 5000m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DepartmentId = 1,
-                            Email = "gosho@gmail.com",
-                            FirstName = "Gosho",
-                            JobTitle = "AI Engineer",
-                            LastName = "Goshov",
-                            Salary = 6000m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DepartmentId = 2,
-                            Email = "koko@gmail.com",
-                            FirstName = "Koko",
-                            JobTitle = "HR Employee",
-                            LastName = "Kokov",
-                            Salary = 5000m
-                        });
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
