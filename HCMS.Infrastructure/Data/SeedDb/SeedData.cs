@@ -4,6 +4,9 @@ namespace HCMS.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
+        public ApplicationUser FirstApplicationUser { get; set; }
+        public ApplicationUser SecondApplicationUser { get; set; }
+        public ApplicationUser ThirdApplicationUser { get; set; }
         public Employee FirstEmployee { get; set; }
         public Employee SecondEmployee { get; set; }
         public Employee ThirdEmployee { get; set; }
@@ -14,13 +17,13 @@ namespace HCMS.Infrastructure.Data.SeedDb
         {
             SeedDepartments();
             SeedEmployees();
+            SeedApplicationUsers();
         }
 
         private void SeedEmployees()
         {
             FirstEmployee = new Employee()
             {
-                Id = 1,
                 FirstName = "Pesho",
                 LastName = "Peshov",
                 Email = "pesho@gmail.com",
@@ -31,7 +34,6 @@ namespace HCMS.Infrastructure.Data.SeedDb
 
             SecondEmployee = new Employee()
             {
-                Id = 2,
                 FirstName = "Gosho",
                 LastName = "Goshov",
                 Email = "gosho@gmail.com",
@@ -42,7 +44,6 @@ namespace HCMS.Infrastructure.Data.SeedDb
 
             ThirdEmployee = new Employee()
             {
-                Id = 3,
                 FirstName = "Koko",
                 LastName = "Kokov",
                 Email = "koko@gmail.com",
@@ -52,17 +53,38 @@ namespace HCMS.Infrastructure.Data.SeedDb
             };
         }
 
+        private void SeedApplicationUsers()
+        {
+            FirstApplicationUser = new ApplicationUser()
+            {
+                UserName = "pesho",
+                Email = "pesho@gmail.com",
+                EmployeeId = 1
+            };
+
+            SecondApplicationUser = new ApplicationUser()
+            {
+                UserName = "gosho",
+                Email = "gosho@gmail.com",
+                EmployeeId = 2
+            };
+            ThirdApplicationUser = new ApplicationUser()
+            {
+                UserName = "koko",
+                Email = "koko@gmail.com",
+                EmployeeId = 3
+            };
+        }
+
         private void SeedDepartments()
         {
             FirstDepartment = new Department()
             {
-                Id = 1,
                 Name = "IT"
             };
             
             SecondDepartment = new Department()
             {
-                Id = 2,
                 Name = "HR"
             };
         }
