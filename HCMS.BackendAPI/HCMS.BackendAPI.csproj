@@ -22,4 +22,8 @@
     <ProjectReference Include="..\HCMS.Infrastructure\HCMS.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
