@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HCMS.Infrastructure\HCMS.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

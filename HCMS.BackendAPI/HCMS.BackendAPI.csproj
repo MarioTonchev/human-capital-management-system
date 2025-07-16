@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HCMS.Core\HCMS.Core.csproj" />
     <ProjectReference Include="..\HCMS.Infrastructure\HCMS.Infrastructure.csproj" />
   </ItemGroup>
 
