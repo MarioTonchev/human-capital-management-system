@@ -1,5 +1,9 @@
+using HCMS.Core.Contracts;
+using HCMS.Core.Services;
 using HCMS.Infrastructure.Data;
+using HCMS.Infrastructure.Data.SeedDb;
 using HCMS.Infrastructure.Entities;
+using HCMS.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,11 +23,21 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await RoleSeeder.SeedAsync(services);
 }
 
 app.UseHttpsRedirection();
