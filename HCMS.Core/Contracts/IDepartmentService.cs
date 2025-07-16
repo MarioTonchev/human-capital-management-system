@@ -6,8 +6,8 @@ namespace HCMS.Core.Contracts
     {
         Task<IEnumerable<DepartmentDto>> GetAllAsync();
         Task<DepartmentDto?> GetByIdAsync(int id);
-        Task CreateAsync(CreateDepartmentDto dto);
-        Task UpdateAsync(int id, CreateDepartmentDto dto);
-        Task DeleteAsync(int id);
+        Task<DepartmentDto> CreateAsync(CreateDepartmentDto dto);
+        Task<bool> UpdateAsync(int id, CreateDepartmentDto dto);
+        Task<bool> DeleteAsync(int id);
     }
 }

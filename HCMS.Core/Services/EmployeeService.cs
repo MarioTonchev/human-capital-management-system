@@ -3,6 +3,7 @@ using HCMS.Core.DTOs.Employee;
 using HCMS.Infrastructure.Entities;
 using HCMS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Xml;
 
 namespace HCMS.Core.Services
 {
@@ -34,7 +35,7 @@ namespace HCMS.Core.Services
             return MapToDto(employee);
         }
 
-        public async Task CreateAsync(CreateEmployeeDto dto)
+        public async Task<EmployeeDto> CreateAsync(CreateEmployeeDto dto)
         {
             var employee = new Employee
             {
@@ -48,15 +49,28 @@ namespace HCMS.Core.Services
 
             await repository.AddAsync(employee);
             await repository.SaveChangesAsync();
+
+            var result = new EmployeeDto
+            {
+                Id = employee.Id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Email = employee.Email,
+                JobTitle = employee.JobTitle,
+                Salary = employee.Salary,
+                DepartmentId = employee.DepartmentId
+            };
+
+            return result;
         }
 
-        public async Task UpdateAsync(int id, CreateEmployeeDto dto)
+        public async Task<bool> UpdateAsync(int id, CreateEmployeeDto dto)
         {
             var employee = await repository.GetByIdAsync<Employee>(id);
 
             if (employee == null)
             {
-                throw new KeyNotFoundException("Employee not found.");
+                return false;
             }
 
             employee.FirstName = dto.FirstName;
@@ -67,35 +81,30 @@ namespace HCMS.Core.Services
             employee.JobTitle = dto.JobTitle;
 
             await repository.SaveChangesAsync();
+            
+            return true;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var employee = await repository.GetByIdAsync<Employee>(id);
 
             if (employee == null)
             {
-                throw new KeyNotFoundException("Employee not found.");
+                return false;
             }
 
             repository.Delete(employee);
 
             await repository.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<EmployeeDto>> GetByDepartmentIdAsync(int departmentId)
         {
             var employees = await repository.All<Employee>()
                 .Where(e => e.DepartmentId == departmentId)
-                .ToListAsync();
-
-            return employees.Select(MapToDto);
-        }
-
-        public async Task<IEnumerable<EmployeeDto>> GetByDepartmentNameAsync(string departmentName)
-        {
-            var employees = await repository.All<Employee>()
-                .Where(e => e.Department.Name == departmentName)
                 .ToListAsync();
 
             return employees.Select(MapToDto);

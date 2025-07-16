@@ -34,7 +34,7 @@ namespace HCMS.Core.Services
             return MapToDto(dept);
         }
 
-        public async Task CreateAsync(CreateDepartmentDto dto)
+        public async Task<DepartmentDto> CreateAsync(CreateDepartmentDto dto)
         {
             var dept = new Department 
             {
@@ -44,34 +44,46 @@ namespace HCMS.Core.Services
             await repository.AddAsync(dept);
 
             await repository.SaveChangesAsync();
+
+            var result = new DepartmentDto
+            {
+                Id = dept.Id,
+                Name = dto.Name
+            };
+
+            return result;
         }
 
-        public async Task UpdateAsync(int id, CreateDepartmentDto dto)
+        public async Task<bool> UpdateAsync(int id, CreateDepartmentDto dto)
         {
             var dept = await repository.GetByIdAsync<Department>(id);
 
             if (dept == null)
             {
-                throw new KeyNotFoundException("Department not found.");
+                return false;
             }
 
             dept.Name = dto.Name;
 
             await repository.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var dept = await repository.GetByIdAsync<Department>(id);
 
             if (dept == null)
             {
-                throw new KeyNotFoundException("Department not found.");
+                return false;
             }
 
             repository.Delete(dept);
 
             await repository.SaveChangesAsync();
+
+            return true;
         }
 
         private DepartmentDto MapToDto(Department department) => new DepartmentDto
