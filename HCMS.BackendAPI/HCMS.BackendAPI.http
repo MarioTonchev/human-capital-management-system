@@ -1,6 +1,6 @@
 @HCMS.BackendAPI_HostAddress = http://localhost:5041
 
-GET {{HCMS.BackendAPI_HostAddress}}/weatherforecast/
+GET {{HCMS.BackendAPI_HostAddress}}/hcms/
 Accept: application/json
 
 ###
