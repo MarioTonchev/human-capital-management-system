@@ -54,7 +54,7 @@ namespace HCMS.Core.Services
             return result;
         }
 
-        public async Task<bool> UpdateAsync(int id, CreateDepartmentDto dto)
+        public async Task<bool> UpdateAsync(int id, UpdateDepartmentDto dto)
         {
             var dept = await repository.GetByIdAsync<Department>(id);
 
