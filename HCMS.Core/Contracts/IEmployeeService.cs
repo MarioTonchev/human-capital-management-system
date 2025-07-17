@@ -7,7 +7,7 @@ namespace HCMS.Core.Contracts
         Task<IEnumerable<EmployeeDto>> GetAllAsync();
         Task<EmployeeDto?> GetByIdAsync(int id);
         Task<EmployeeDto> CreateAsync(CreateEmployeeDto dto);
-        Task<bool> UpdateAsync(int id, CreateEmployeeDto dto);
+        Task<bool> UpdateAsync(int id, UpdateEmployeeDto dto);
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<EmployeeDto>> GetByDepartmentIdAsync(int departmentId);
     }

@@ -64,7 +64,7 @@ namespace HCMS.Core.Services
             return result;
         }
 
-        public async Task<bool> UpdateAsync(int id, CreateEmployeeDto dto)
+        public async Task<bool> UpdateAsync(int id, UpdateEmployeeDto dto)
         {
             var employee = await repository.GetByIdAsync<Employee>(id);
 
@@ -76,9 +76,9 @@ namespace HCMS.Core.Services
             employee.FirstName = dto.FirstName;
             employee.LastName = dto.LastName;
             employee.Email = dto.Email;
-            employee.DepartmentId = dto.DepartmentId;
             employee.Salary = dto.Salary;
             employee.JobTitle = dto.JobTitle;
+            employee.DepartmentId = dto.DepartmentId;
 
             await repository.SaveChangesAsync();
             
