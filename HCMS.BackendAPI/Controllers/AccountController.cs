@@ -5,10 +5,11 @@ using HCMS.Infrastructure.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HCMS.BackendAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/backend/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -48,8 +49,8 @@ namespace HCMS.BackendAPI.Controllers
         }
 
         [Authorize(Roles = "HRAdmin")]
-        [HttpPost("create-user")]
-        public async Task<IActionResult> CreateUser([FromBody] RegisterUserDTO dto)
+        [HttpPost("register-user")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO dto)
         {
             if (!ModelState.IsValid)
             {
@@ -84,6 +85,34 @@ namespace HCMS.BackendAPI.Controllers
 
             await userManager.AddToRoleAsync(newApplicationUser, dto.Role);
             return Ok("User created");
+        }
+
+        [Authorize(Roles = "HRAdmin")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var appUser = await userManager.Users.FirstOrDefaultAsync(u => u.EmployeeId == id);
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            var isApplicationUserDeleted = await userManager.DeleteAsync(appUser);
+
+            if (!isApplicationUserDeleted.Succeeded)
+            {
+                return BadRequest(isApplicationUserDeleted.Errors);
+            }
+
+            var isEmployeeDeleted = await employeeService.DeleteAsync(id);
+
+            if (!isEmployeeDeleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
 
         [Authorize]

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HCMS.BackendAPI.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/backend/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
@@ -84,10 +84,9 @@ namespace HCMS.BackendAPI.Controllers
             return Forbid();
         }
 
-        //todo: rename this dto for clarification
         [Authorize(Roles = "HRAdmin,Manager")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] CreateEmployeeDto dto)
+        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -119,21 +118,6 @@ namespace HCMS.BackendAPI.Controllers
             }
 
             if (!isUpdated)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
-
-        [Authorize(Roles = "HRAdmin")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
-        {
-            //todo: also delete corresponding application user
-            var deleted = await employeeService.DeleteAsync(id);
-
-            if (!deleted)
             {
                 return NotFound();
             }
