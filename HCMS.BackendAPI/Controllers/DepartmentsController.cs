@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HCMS.BackendAPI.Controllers
 {
     [Authorize(Roles = "HRAdmin,Manager")]
-    [Route("api/[controller]")]
+    [Route("api/backend/[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
@@ -72,7 +72,7 @@ namespace HCMS.BackendAPI.Controllers
 
         [Authorize(Roles = "HRAdmin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] CreateDepartmentDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateDepartmentDto dto)
         {
             if (!ModelState.IsValid)
             {
