@@ -14,5 +14,11 @@
         {
             public const int DepartmentNameMaxLength = 100;
         }
+
+        public static class ApplicationUserConstants
+        {
+            public const int UsernameMaxLength = 50;
+            public const int PasswordMaxLength = 100;
+        }
     }
 }
