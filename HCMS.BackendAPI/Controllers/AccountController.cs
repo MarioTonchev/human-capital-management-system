@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HCMS.BackendAPI.Controllers
 {
-    [Route("api/backend/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -45,7 +45,7 @@ namespace HCMS.BackendAPI.Controllers
             var roles = await userManager.GetRolesAsync(user);
             var token = jwtService.GenerateToken(user, roles);
 
-            return Ok(new { token });
+            return Ok(token);
         }
 
         [Authorize(Roles = "HRAdmin")]
