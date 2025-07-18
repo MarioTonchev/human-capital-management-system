@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HCMS.BackendAPI.Controllers
 {
     [Authorize(Roles = "HRAdmin,Manager")]
-    [Route("api/backend/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase
     {

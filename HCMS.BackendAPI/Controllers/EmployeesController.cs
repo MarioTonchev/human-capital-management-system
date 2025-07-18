@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HCMS.BackendAPI.Controllers
 {
     [Authorize]
-    [Route("api/backend/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
