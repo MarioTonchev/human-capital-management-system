@@ -3,7 +3,6 @@ using HCMS.Core.DTOs.Employee;
 using HCMS.Infrastructure.Entities;
 using HCMS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Xml;
 
 namespace HCMS.Core.Services
 {
