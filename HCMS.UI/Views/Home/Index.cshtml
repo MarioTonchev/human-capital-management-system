@@ -9,75 +9,82 @@
     var isHRAdmin = user.IsInRole("HRAdmin");
 }
 
-<div class="text-center">
-    <h1 class="display-4 mb-3">Welcome to HCMS</h1>
-    <p class="lead">Human Capital Management System</p>
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome to <span class="text-primary">HCMS</span></h1>
+        <p class="lead">Human Capital Management System</p>
+    </div>
 
     @if (!isAuthenticated)
     {
-        <p>Please <a href="/Account/Login">log in</a> to access your dashboard.</p>
+        <div class="alert alert-info w-100 w-md-50 mx-auto text-center">
+            Please <a href="/Account/Login" class="alert-link">log in</a> to access your dashboard.
+        </div>
     }
     else
     {
         <div class="row justify-content-center">
-            
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">My Profile</h5>
-                            <p class="card-text">View your profile information.</p>
-                            <a href="/Employee/MyProfile" class="btn btn-primary">Go to Profile</a>
-                        </div>
+            <div class="col-lg-4 col-md-6 col-sm-8 mb-4">
+                <div class="card shadow-sm h-100 border-primary">
+                    <div class="card-body text-start">
+                        <h5 class="card-title text-primary"><i class="bi bi-person-circle me-2"></i>My Profile</h5>
+                        <p class="card-text">View your profile information.</p>
+                        <a href="/Employee/MyProfile" class="btn btn-outline-primary w-100">Go to Profile</a>
                     </div>
                 </div>
-            
+            </div>
+
             @if (isManager)
             {
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">My Department</h5>
+                <div class="col-lg-4 col-md-6 col-sm-8 mb-4">
+                    <div class="card shadow-sm h-100 border-info">
+                        <div class="card-body text-start">
+                            <h5 class="card-title text-info"><i class="bi bi-building me-2"></i>My Department</h5>
                             <p class="card-text">View and manage your department.</p>
-                            <a href="/Department/Index" class="btn btn-primary">Go to Department</a>
+                            <a href="/Department/Index" class="btn btn-outline-info w-100">Go to Department</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Employees</h5>
+
+                <div class="col-lg-4 col-md-6 col-sm-8 mb-4">
+                    <div class="card shadow-sm h-100 border-warning">
+                        <div class="card-body text-start">
+                            <h5 class="card-title text-warning"><i class="bi bi-people-fill me-2"></i>Employees</h5>
                             <p class="card-text">View and edit employees in your department.</p>
-                            <a href="/Employee/Index" class="btn btn-primary">Manage Employees</a>
+                            <a href="/Employee/Index" class="btn btn-outline-warning w-100">Manage Employees</a>
                         </div>
                     </div>
                 </div>
             }
+
             @if (isHRAdmin)
             {
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Departments</h5>
+                <div class="col-lg-4 col-md-6 col-sm-8 mb-4">
+                    <div class="card shadow-sm h-100 border-success">
+                        <div class="card-body text-start">
+                            <h5 class="card-title text-success"><i class="bi bi-diagram-3-fill me-2"></i>Departments</h5>
                             <p class="card-text">Manage all departments in the company.</p>
-                            <a href="/Department/Index" class="btn btn-primary">Manage Departments</a>
+                            <a href="/Department/Index" class="btn btn-outline-success w-100">Manage Departments</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Employees</h5>
+
+                <div class="col-lg-4 col-md-6 col-sm-8 mb-4">
+                    <div class="card shadow-sm h-100 border-danger">
+                        <div class="card-body text-start">
+                            <h5 class="card-title text-danger"><i class="bi bi-person-lines-fill me-2"></i>Employees</h5>
                             <p class="card-text">Manage all employees.</p>
-                            <a href="/Employee/Index" class="btn btn-primary">Manage Employees</a>
+                            <a href="/Employee/Index" class="btn btn-outline-danger w-100">Manage Employees</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Register User</h5>
+
+                <div class="col-lg-4 col-md-6 col-sm-8 mb-4">
+                    <div class="card shadow-sm h-100 border-secondary">
+                        <div class="card-body text-start">
+                            <h5 class="card-title text-secondary"><i class="bi bi-person-plus-fill me-2"></i>Register User</h5>
                             <p class="card-text">Register new users to the system.</p>
-                            <a href="/Account/Register" class="btn btn-primary">Register</a>
+                            <a href="/Account/RegisterUser" class="btn btn-outline-secondary w-100">Register</a>
                         </div>
                     </div>
                 </div>
