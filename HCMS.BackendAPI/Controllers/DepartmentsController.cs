@@ -19,13 +19,26 @@ namespace HCMS.BackendAPI.Controllers
             this.currentUserService = currentUserService;
         }
 
-        [Authorize(Roles = "HRAdmin")]
+        [Authorize(Roles = "HRAdmin,Manager")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var departments = await departmentService.GetAllAsync();
+            
+            if (User.IsInRole("HRAdmin"))
+            {
+                return Ok(departments);
+            }
 
-            return Ok(departments);
+            if (User.IsInRole("Manager"))
+            {
+                var currUser = await currentUserService.GetCurrentUserAsync();
+                departments = departments.Where(d => d.Id == currUser.Employee.DepartmentId).ToList();
+
+                return Ok(departments);
+            }
+
+            return Forbid();
         }
 
         [Authorize(Roles = "HRAdmin,Manager")]
@@ -70,13 +83,23 @@ namespace HCMS.BackendAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-        [Authorize(Roles = "HRAdmin")]
+        [Authorize(Roles = "HRAdmin,Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateDepartmentDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (User.IsInRole("Manager"))
+            {
+                var currentUser = await currentUserService.GetCurrentUserAsync();
+
+                if (currentUser.Employee.DepartmentId != id)
+                {
+                    return Forbid();
+                }
             }
 
             var updated = await departmentService.UpdateAsync(id, dto);
