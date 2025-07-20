@@ -15,6 +15,10 @@ builder.Services.ConfigureJwtAuth(builder.Configuration);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureDependencies();
 
+// Specifying the URLs for the application to listen on.
+
+builder.WebHost.UseUrls("https://localhost:7248", "http://localhost:5041");
+
 // Building the application.
 
 var app = builder.Build();

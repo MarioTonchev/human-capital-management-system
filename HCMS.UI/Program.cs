@@ -10,6 +10,10 @@ builder.Services.ConfigureSession();
 builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.ConfigureUIServices();
 
+// Specifying the URLs for the application to listen on.
+
+builder.WebHost.UseUrls("https://localhost:7039", "http://localhost:5139");
+
 // Building the application.
 
 var app = builder.Build();
