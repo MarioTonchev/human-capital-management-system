@@ -8,6 +8,7 @@ namespace HCMS.BackendAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Tags("Employees")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
@@ -19,6 +20,10 @@ namespace HCMS.BackendAPI.Controllers
             this.currentUserService = currentUserService;
         }
 
+        /// <summary>
+        /// Get the profile of the currently logged-in user.
+        /// </summary>
+        /// <returns>Information about the currently logged-in user as an employee dto.</returns>
         [HttpGet("me")]
         public async Task<IActionResult> GetMyProfile()
         {
@@ -34,6 +39,10 @@ namespace HCMS.BackendAPI.Controllers
             return employee == null ? NotFound() : Ok(employee);
         }
 
+        /// <summary>
+        /// Get all employees in the system. HRAdmins can access all employees, while Managers can only access employees from their own department.
+        /// </summary>
+        /// <returns>Collection of all employees</returns>
         [Authorize(Roles = "HRAdmin,Manager")]
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
@@ -46,7 +55,6 @@ namespace HCMS.BackendAPI.Controllers
                 return Ok(employees);
             }
 
-            //Here if the current user is a manager he will get only the employees from his own department
             if (User.IsInRole("Manager"))
             {
                 var employeesByDepartment = await employeeService.GetByDepartmentIdAsync((int)currUser.Employee.DepartmentId);
@@ -56,6 +64,11 @@ namespace HCMS.BackendAPI.Controllers
             return Forbid();
         }
 
+        /// <summary>
+        /// Get a specific employee by their ID. HRAdmins can access any employee, while Managers can only access employees from their own department.
+        /// </summary>
+        /// <param name="id">The id of the employee.</param>
+        /// <returns>The found employee as an employee dto.</returns>
         [Authorize(Roles = "HRAdmin,Manager")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeById(int id)
@@ -84,6 +97,12 @@ namespace HCMS.BackendAPI.Controllers
             return Forbid();
         }
 
+        /// <summary>
+        /// Update an employee's information. HRAdmins can update any employee, while Managers can only update employees from their own department.
+        /// </summary>
+        /// <param name="id">The id of the employee.</param>
+        /// <param name="dto">Form data mapped to an update employee dto</param>
+        /// <returns>Status code without any data depending on whether the update has succeeded or failed.</returns>
         [Authorize(Roles = "HRAdmin,Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeDto dto)

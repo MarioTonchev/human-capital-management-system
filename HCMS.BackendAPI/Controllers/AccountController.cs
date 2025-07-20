@@ -27,6 +27,11 @@ namespace HCMS.BackendAPI.Controllers
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// Login endpoint for users. Validates the username and password, and returns a JWT token if successful.
+        /// </summary>
+        /// <param name="dto">Formd data mapped to login dto.</param>
+        /// <returns>JWT if successful.</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
@@ -48,6 +53,11 @@ namespace HCMS.BackendAPI.Controllers
             return Ok(token);
         }
 
+        /// <summary>
+        /// Register a new user in the system. This endpoint is only accessible by HRAdmins.
+        /// </summary>
+        /// <param name="dto">Form data mapped to register user dto.</param>
+        /// <returns>Status code depending on whether the registration was successful or a failure.</returns>
         [Authorize(Roles = "HRAdmin")]
         [HttpPost("register-user")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO dto)
@@ -87,6 +97,11 @@ namespace HCMS.BackendAPI.Controllers
             return Ok("User created");
         }
 
+        /// <summary>
+        /// Delete a user from the system. This endpoint is only accessible by HRAdmins.
+        /// </summary>
+        /// <param name="id">The id of the user.</param>
+        /// <returns>Status code depending on whether the deletion was successful or a failure.</returns>
         [Authorize(Roles = "HRAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -115,6 +130,10 @@ namespace HCMS.BackendAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Logout endpoint. This endpoint is used to log out the user. It does not require any parameters and simply returns a success message.
+        /// </summary>
+        /// <returns>Success message if the user has logged out.</returns>
         [Authorize]
         [HttpPost("logout")]
         public IActionResult Logout()
