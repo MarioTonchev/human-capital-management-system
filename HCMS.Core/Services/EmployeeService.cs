@@ -115,6 +115,7 @@ namespace HCMS.Core.Services
             FirstName = employee.FirstName,
             LastName = employee.LastName,
             Email = employee.Email,
+            DepartmentName = employee.Department?.Name,
             DepartmentId = employee.DepartmentId,
             Salary = employee.Salary,
             JobTitle = employee.JobTitle
