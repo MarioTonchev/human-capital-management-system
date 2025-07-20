@@ -1,13 +1,87 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Home";
+    var user = HttpContextAccessor.HttpContext.User;
+    var isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+    var isEmployee = user.IsInRole("Employee");
+    var isManager = user.IsInRole("Manager");
+    var isHRAdmin = user.IsInRole("HRAdmin");
 }
 
 <div class="text-center">
-    <h1 class="display-4 mb-4">Welcome to HCMS</h1>
-    <p class="lead">Manage employees, departments, and salaries all in one place.</p>
+    <h1 class="display-4 mb-3">Welcome to HCMS</h1>
+    <p class="lead">Human Capital Management System</p>
 
-    <div class="mt-5">
-        <a class="btn btn-primary btn-lg me-2" href="/Employee">Manage Employees</a>
-        <a class="btn btn-secondary btn-lg" href="/Department">Manage Departments</a>
-    </div>
+    @if (!isAuthenticated)
+    {
+        <p>Please <a href="/Account/Login">log in</a> to access your dashboard.</p>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">My Profile</h5>
+                            <p class="card-text">View your profile information.</p>
+                            <a href="/Employee/MyProfile" class="btn btn-primary">Go to Profile</a>
+                        </div>
+                    </div>
+                </div>
+            
+            @if (isManager)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">My Department</h5>
+                            <p class="card-text">View and manage your department.</p>
+                            <a href="/Department/Index" class="btn btn-primary">Go to Department</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Employees</h5>
+                            <p class="card-text">View and edit employees in your department.</p>
+                            <a href="/Employee/Index" class="btn btn-primary">Manage Employees</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (isHRAdmin)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Departments</h5>
+                            <p class="card-text">Manage all departments in the company.</p>
+                            <a href="/Department/Index" class="btn btn-primary">Manage Departments</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Employees</h5>
+                            <p class="card-text">Manage all employees.</p>
+                            <a href="/Employee/Index" class="btn btn-primary">Manage Employees</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Register User</h5>
+                            <p class="card-text">Register new users to the system.</p>
+                            <a href="/Account/Register" class="btn btn-primary">Register</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>
