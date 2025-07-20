@@ -1,5 +1,8 @@
 using HCMS.UI.Contracts;
 using HCMS.UI.UIServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +10,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient("BackendApi", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5041/api/");
+    client.BaseAddress = new Uri("https://localhost:7248/api/");
 });
 
 builder.Services.AddHttpContextAccessor();
@@ -15,6 +18,39 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAccountUIService, AccountUIService>();
 builder.Services.AddScoped<IEmployeeUIService, EmployeeUIService>();
 builder.Services.AddScoped<IDepartmentUIService, DepartmentUIService>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var jwt = context.HttpContext.Session.GetString("JWT");
+
+            if (!string.IsNullOrEmpty(jwt))
+            {
+                context.Token = jwt;
+            }
+
+            return Task.CompletedTask;
+        }
+    };
+});
 
 builder.Services.AddDistributedMemoryCache(); 
 
@@ -33,10 +69,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseRouting();
-
-app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
