@@ -1,0 +1,39 @@
+﻿@model List<HCMS.Core.DTOs.Department.DepartmentDto>
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<h2>Departments</h2>
+@if (User.IsInRole("HRAdmin"))
+{
+    <a class="btn btn-primary mb-3" asp-action="Create">Create New</a>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dept in Model)
+        {
+            <tr>
+                <td>@dept.Name</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@dept.Id">Details</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@dept.Id">Edit</a>
+
+                    @if (User.IsInRole("HRAdmin"))
+                    {
+                        <form asp-action="Delete" asp-route-id="@dept.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
