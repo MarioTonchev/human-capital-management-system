@@ -1,16 +1,19 @@
 ﻿using HCMS.Core.DTOs.Account;
 using HCMS.UI.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HCMS.UI.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountUIService accountService;
+        private readonly IAccountUIService accountUIService;
+        private readonly IDepartmentUIService departmentUIService;
 
-        public AccountController(IAccountUIService accountService)
+        public AccountController(IAccountUIService accountService, IDepartmentUIService departmentUIService)
         {
-            this.accountService = accountService;
+            this.accountUIService = accountService;
+            this.departmentUIService = departmentUIService;
         }
 
         [HttpGet]
@@ -27,7 +30,7 @@ namespace HCMS.UI.Controllers
                 return View(dto);
             }
 
-            bool success = await accountService.LoginAsync(dto);
+            bool success = await accountUIService.LoginAsync(dto);
             if (!success)
             {
                 ModelState.AddModelError("", "Invalid login.");
@@ -39,46 +42,60 @@ namespace HCMS.UI.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await accountService.LogoutAsync();
+            await accountUIService.LogoutAsync();
             return RedirectToAction("Index", "Home"); 
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> RegisterUser()
         {
+            var departments = await departmentUIService.GetAllDepartmentsAsync();
+
+            ViewBag.Departments = new SelectList(departments, "Id", "Name");
+            ViewBag.Roles = new SelectList(new[] { "Employee", "Manager", "HRAdmin" });
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterUserDTO dto)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterUser(RegisterUserDTO dto)
         {
             if (!ModelState.IsValid)
             {
+                var departments = await departmentUIService.GetAllDepartmentsAsync();
+                ViewBag.Departments = new SelectList(departments, "Id", "Name");
+                ViewBag.Roles = new SelectList(new[] { "Employee", "Manager", "HRAdmin" });
+
                 return View(dto);
             }
 
-            bool success = await accountService.RegisterAsync(dto);
+            bool success = await accountUIService.RegisterAsync(dto);
 
             if (!success)
             {
+                var departments = await departmentUIService.GetAllDepartmentsAsync();
+                ViewBag.Departments = new SelectList(departments, "Id", "Name");
+                ViewBag.Roles = new SelectList(new[] { "Employee", "Manager", "HRAdmin" });
+
                 ModelState.AddModelError("", "Registration failed.");
                 return View(dto);
             }
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Employee");
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            bool success = await accountService.DeleteUserAsync(id);
+            bool success = await accountUIService.DeleteUserAsync(id);
 
             if (!success)
             {
                 return NotFound("User not found or couldn't be deleted.");
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Employee");
         }
     }
 }
