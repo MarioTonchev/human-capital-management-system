@@ -1,0 +1,15 @@
+﻿@model HCMS.Core.DTOs.Employee.EmployeeDto
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h2>@Model.FirstName @Model.LastName</h2>
+
+<div class="card mb-3" style="max-width: 600px;">
+    <div class="card-body">
+        <h5 class="card-title">Job Title: @Model.JobTitle</h5>
+        <p class="card-text"><strong>Salary:</strong> @Model.Salary.ToString("C")</p>
+        <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+    </div>
+</div>
