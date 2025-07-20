@@ -17,14 +17,15 @@ namespace HCMS.Core.Services
 
         public async Task<IEnumerable<EmployeeDto>> GetAllAsync()
         {
-            var employees = await repository.All<Employee>().ToListAsync();
+            var employees = await repository.All<Employee>().Include(e => e.Department).ToListAsync();
 
             return employees.Select(MapToDto);
         }
 
         public async Task<EmployeeDto?> GetByIdAsync(int id)
         {
-            var employee = await repository.GetByIdAsync<Employee>(id);
+            var allEmployees = await repository.All<Employee>().Include(e => e.Department).ToListAsync();
+            var employee = allEmployees.FirstOrDefault(e => e.Id == id);
 
             if (employee == null)
             {
