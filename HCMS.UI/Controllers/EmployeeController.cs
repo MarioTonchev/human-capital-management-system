@@ -1,7 +1,6 @@
 ﻿using HCMS.Core.DTOs.Employee;
 using HCMS.UI.Contracts;
 using HCMS.UI.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
