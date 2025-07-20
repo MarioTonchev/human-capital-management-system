@@ -8,25 +8,27 @@ namespace HCMS.UI.UIServices
 {
     public class AccountUIService : IAccountUIService
     {
-        private readonly HttpClient client;
+        private readonly IHttpClientFactory httpClientFactory;
         private readonly IHttpContextAccessor httpContextAccessor;
 
         public AccountUIService(IHttpClientFactory factory, IHttpContextAccessor httpContextAccessor)
         {
-            client = factory.CreateClient("BackendApi");
+            httpClientFactory = factory;
             this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> LoginAsync(LoginDTO dto)
         {
+            var client = httpClientFactory.CreateClient("BackendApi");
             var response = await client.PostAsJsonAsync("account/login", dto);
-            Console.WriteLine(client.BaseAddress);
+
             if (!response.IsSuccessStatusCode)
             {
                 return false;
             }
 
-            var jwt = await response.Content.ReadAsStringAsync();
+            var jwt = await response.Content.ReadAsStringAsync();   
+            jwt = jwt.Trim('"');
 
             httpContextAccessor.HttpContext?.Session.SetString("JWT", jwt);
 
@@ -42,7 +44,7 @@ namespace HCMS.UI.UIServices
 
         public async Task<bool> RegisterAsync(RegisterUserDTO dto)
         {
-            AddAuthHeaderIfAvailable();
+            var client = CreateClientWithToken();
 
             var response = await client.PostAsJsonAsync("account/register-user", dto);
 
@@ -51,21 +53,24 @@ namespace HCMS.UI.UIServices
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            AddAuthHeaderIfAvailable();
+            var client = CreateClientWithToken();
 
             var response = await client.DeleteAsync($"account/{id}");
 
             return response.IsSuccessStatusCode;
         }
 
-        private void AddAuthHeaderIfAvailable()
+        private HttpClient CreateClientWithToken()
         {
+            var client = httpClientFactory.CreateClient("BackendApi");
             var token = httpContextAccessor.HttpContext?.Session.GetString("JWT");
 
             if (!string.IsNullOrWhiteSpace(token))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
+
+            return client;
         }
     }
 }
