@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HCMS.Core\HCMS.Core.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Employees\" />
-    <Folder Include="Views\Departments\" />
+    <ProjectReference Include="..\HCMS.Core\HCMS.Core.csproj" />
   </ItemGroup>
 
 </Project>
