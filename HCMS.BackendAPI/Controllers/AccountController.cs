@@ -129,16 +129,5 @@ namespace HCMS.BackendAPI.Controllers
 
             return NoContent();
         }
-
-        /// <summary>
-        /// Logout endpoint. This endpoint is used to log out the user. It does not require any parameters and simply returns a success message.
-        /// </summary>
-        /// <returns>Success message if the user has logged out.</returns>
-        [Authorize]
-        [HttpPost("logout")]
-        public IActionResult Logout()
-        {
-            return Ok("Logged out");
-        }
     }
 }
