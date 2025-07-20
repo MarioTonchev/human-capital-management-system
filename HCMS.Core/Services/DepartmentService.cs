@@ -1,5 +1,6 @@
 ﻿using HCMS.Core.Contracts;
 using HCMS.Core.DTOs.Department;
+using HCMS.Core.DTOs.Employee;
 using HCMS.Infrastructure.Entities;
 using HCMS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,14 +18,15 @@ namespace HCMS.Core.Services
 
         public async Task<IEnumerable<DepartmentDto>> GetAllAsync()
         {
-            var departments = await repository.All<Department>().ToListAsync();
+            var departments = await repository.All<Department>().Include(d => d.Employees).ToListAsync();
 
             return departments.Select(MapToDto);
         }
 
         public async Task<DepartmentDto?> GetByIdAsync(int id)
         {
-            var dept = await repository.GetByIdAsync<Department>(id);
+            var departments = await repository.All<Department>().Include(d => d.Employees).ToListAsync();
+            var dept = departments.FirstOrDefault(d => d.Id == id);
 
             if (dept == null)
             {
@@ -36,9 +38,9 @@ namespace HCMS.Core.Services
 
         public async Task<DepartmentDto> CreateAsync(CreateDepartmentDto dto)
         {
-            var dept = new Department 
+            var dept = new Department
             {
-                Name = dto.Name 
+                Name = dto.Name
             };
 
             await repository.AddAsync(dept);
@@ -92,10 +94,24 @@ namespace HCMS.Core.Services
             return true;
         }
 
-        private DepartmentDto MapToDto(Department department) => new DepartmentDto
+        private DepartmentDto MapToDto(Department department)
         {
-            Id = department.Id,
-            Name = department.Name
-        };
+            var result = new DepartmentDto
+            {
+                Id = department.Id,
+                Name = department.Name,
+                Employees = department.Employees?.Select(e => new EmployeeDto
+                {
+                    Id = e.Id,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    Email = e.Email,
+                    JobTitle = e.JobTitle,
+                    Salary = e.Salary
+                }).ToList() ?? new List<EmployeeDto>()
+            };
+
+            return result;
+        }
     }
 }
