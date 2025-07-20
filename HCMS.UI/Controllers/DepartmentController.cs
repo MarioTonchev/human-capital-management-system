@@ -115,7 +115,7 @@ namespace HCMS.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await departmentUIService.DeleteDepartmentAsync(id);
+            await departmentUIService.DeleteDepartmentAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
