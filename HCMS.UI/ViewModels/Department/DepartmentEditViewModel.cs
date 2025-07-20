@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static HCMS.Infrastructure.Constants.EntityConstants.DepartmentConstants;
 
-namespace HCMS.UI.ViewModels
+namespace HCMS.UI.ViewModels.Department
 {
     public class DepartmentEditViewModel
     {

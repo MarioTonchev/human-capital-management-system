@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static HCMS.Infrastructure.Constants.EntityConstants.EmployeeConstants;
 
-namespace HCMS.UI.ViewModels
+namespace HCMS.UI.ViewModels.Employee
 {
     public class EmployeeEditViewModel
     {
