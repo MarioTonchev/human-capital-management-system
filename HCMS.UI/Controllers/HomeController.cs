@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using HCMS.Web.Models;
+using HCMS.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HCMS.Web.Controllers

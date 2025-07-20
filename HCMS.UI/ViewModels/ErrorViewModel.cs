@@ -1,4 +1,4 @@
-namespace HCMS.Web.Models
+namespace HCMS.UI.ViewModels
 {
     public class ErrorViewModel
     {
