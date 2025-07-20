@@ -38,6 +38,23 @@ A modular and secure Human Capital Management System built with ASP.NET Core, En
 
 ---
 
+## 👥 Roles and Permissions
+
+### HR Admin
+- Full access to managing employees and departments.
+- Can create, update, and delete records.
+- Has access to all features.
+
+### Manager
+- Can view and update employees within their own department.
+- Cannot manage other departments or perform system-wide admin tasks.
+
+### Employee
+- Can only view their own profile details.
+- No administrative rights.
+
+---
+
 ## 📸 Screenshots
 
 ### Login Page
@@ -92,6 +109,18 @@ dotnet run --project HCMS.BackendAPI
 dotnet run --project HCMS.UI
 ```
 
+---
+
+## 🔑 Seeded HRAdmin Account
+
+The application seeds several user accounts on startup.  
+You can log in as an HRAdmin with the following credentials:
+
+- **Username:** admin  
+- **Password:** a12345
+
+---
+
 ## 🧪 API Documentation
 Once the API is running, open:
 
@@ -106,6 +135,8 @@ From there you can:
 - Authorize via JWT
 
 - Send test requests
+
+---
 
 ## 🔐 Authentication Notes
 
