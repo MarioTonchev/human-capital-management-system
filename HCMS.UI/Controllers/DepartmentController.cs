@@ -1,6 +1,6 @@
 ﻿using HCMS.Core.DTOs.Department;
 using HCMS.UI.Contracts;
-using HCMS.UI.ViewModels;
+using HCMS.UI.ViewModels.Department;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HCMS.UI.Controllers
