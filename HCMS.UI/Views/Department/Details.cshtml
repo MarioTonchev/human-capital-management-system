@@ -6,18 +6,53 @@
 
 <h2 class="mb-4">Department Details</h2>
 
-<div class="card mb-4">
+<div class="card mb-4 shadow-sm">
     <div class="card-body">
         <dl class="row mb-0">
-            <dt class="col-sm-3 fw-semibold">Name</dt>
+            <dt class="col-sm-3 fw-semibold">Department Name</dt>
             <dd class="col-sm-9">@Model.Name</dd>
         </dl>
     </div>
 </div>
 
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">
-    <i class="bi bi-pencil-square"></i> Edit
-</a>
-<a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="bi bi-arrow-left"></i> Back
-</a>
+@if (Model.Employees != null && Model.Employees.Any())
+{
+    <h4 class="mb-3">Employees in this Department</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Job Title</th>
+                    <th scope="col">Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Employees.Count; i++)
+                {
+                    var emp = Model.Employees[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@emp.FirstName</td>
+                        <td>@emp.LastName</td>
+                        <td>@emp.JobTitle</td>
+                        <td>@emp.Salary</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">No employees are assigned to this department.</div>
+}
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
