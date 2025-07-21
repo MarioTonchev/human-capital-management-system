@@ -67,6 +67,17 @@ namespace HCMS.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (await userManager.FindByNameAsync(dto.Username) != null)
+            {
+                return BadRequest("Username already exists.");
+            }
+                
+
+            if (await userManager.FindByEmailAsync(dto.Email) != null)
+            {
+                return BadRequest("Email already in use.");
+            }
+                
             var createEmployeeDto = new CreateEmployeeDto
             {
                 FirstName = dto.FirstName,
@@ -111,6 +122,13 @@ namespace HCMS.BackendAPI.Controllers
             if (appUser == null)
             {
                 return NotFound();
+            }
+
+            var currentUserId = userManager.GetUserId(User);
+
+            if (appUser.Id == currentUserId)
+            {
+                return BadRequest("You cannot delete your own account.");
             }
 
             var isApplicationUserDeleted = await userManager.DeleteAsync(appUser);
