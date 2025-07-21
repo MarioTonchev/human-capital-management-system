@@ -18,6 +18,11 @@ namespace HCMS.Infrastructure.Data.SeedDb
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+            if (repository.AllAsReadOnly<Employee>().Any())
+            {
+                return; 
+            }
+
             await SeedRolesAsync(roleManager);
             await SeedDepartmentsAsync(repository);
             await SeedEmployeesAsync(repository);
