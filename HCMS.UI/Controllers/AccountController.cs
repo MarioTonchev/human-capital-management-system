@@ -88,12 +88,7 @@ namespace HCMS.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            bool success = await accountUIService.DeleteUserAsync(id);
-
-            if (!success)
-            {
-                return NotFound("User not found or couldn't be deleted.");
-            }
+            await accountUIService.DeleteUserAsync(id);
 
             return RedirectToAction("Index", "Employee");
         }
