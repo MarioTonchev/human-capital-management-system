@@ -71,7 +71,6 @@ namespace HCMS.BackendAPI.Controllers
             {
                 return BadRequest("Username already exists.");
             }
-                
 
             if (await userManager.FindByEmailAsync(dto.Email) != null)
             {
