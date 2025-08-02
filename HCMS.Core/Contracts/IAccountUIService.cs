@@ -1,6 +1,6 @@
 ﻿using HCMS.Core.DTOs.Account;
 
-namespace HCMS.UI.Contracts
+namespace HCMS.Core.Contracts
 {
     public interface IAccountUIService
     {

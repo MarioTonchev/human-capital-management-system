@@ -1,6 +1,6 @@
 ﻿using HCMS.Core.DTOs.Department;
 
-namespace HCMS.UI.Contracts
+namespace HCMS.Core.Contracts
 {
     public interface IDepartmentUIService
     {
