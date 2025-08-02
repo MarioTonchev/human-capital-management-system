@@ -74,15 +74,15 @@ namespace HCMS.Core.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var allDepartments = await repository.All<Department>().Include(d => d.Employees).ToListAsync();
-            var dept = allDepartments.FirstOrDefault(d => d.Id == id);
+            var dept = await repository.All<Department>().Include(d => d.Employees)
+                .FirstOrDefaultAsync(d => d.Id == id);
 
             if (dept == null)
             {
                 return false;
             }
 
-            if (dept.Employees.Any())
+            if (dept.Employees?.Count > 0)
             {
                 return false;
             }
