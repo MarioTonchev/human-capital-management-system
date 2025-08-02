@@ -30,7 +30,7 @@ namespace HCMS.BackendAPI.Controllers
         /// <summary>
         /// Login endpoint for users. Validates the username and password, and returns a JWT token if successful.
         /// </summary>
-        /// <param name="dto">Formd data mapped to login dto.</param>
+        /// <param name="dto">Form data mapped to login dto.</param>
         /// <returns>JWT if successful.</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
