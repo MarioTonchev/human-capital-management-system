@@ -24,8 +24,8 @@ namespace HCMS.Core.Services
 
         public async Task<EmployeeDto?> GetByIdAsync(int id)
         {
-            var allEmployees = await repository.All<Employee>().Include(e => e.Department).ToListAsync();
-            var employee = allEmployees.FirstOrDefault(e => e.Id == id);
+            var employee = await repository.All<Employee>().Include(e => e.Department)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (employee == null)
             {
