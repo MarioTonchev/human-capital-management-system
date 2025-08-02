@@ -1,6 +1,5 @@
 ﻿using HCMS.Core.DTOs.Employee;
-using HCMS.UI.Contracts;
-using System.Net.Http;
+using HCMS.Core.Contracts;
 using System.Net.Http.Headers;
 
 namespace HCMS.UI.UIServices

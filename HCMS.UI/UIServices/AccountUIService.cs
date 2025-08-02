@@ -1,8 +1,7 @@
-﻿using HCMS.Core.DTOs.Account;
-using HCMS.UI.Contracts;
+﻿using HCMS.Core.Contracts;
+using HCMS.Core.DTOs.Account;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 
 namespace HCMS.UI.UIServices
 {

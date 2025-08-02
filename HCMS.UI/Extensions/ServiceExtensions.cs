@@ -1,4 +1,4 @@
-﻿using HCMS.UI.Contracts;
+﻿using HCMS.Core.Contracts;
 using HCMS.UI.UIServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

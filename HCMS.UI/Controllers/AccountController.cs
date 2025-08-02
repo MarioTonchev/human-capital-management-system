@@ -1,5 +1,5 @@
 ﻿using HCMS.Core.DTOs.Account;
-using HCMS.UI.Contracts;
+using HCMS.Core.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

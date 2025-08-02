@@ -1,5 +1,5 @@
 ﻿using HCMS.Core.DTOs.Department;
-using HCMS.UI.Contracts;
+using HCMS.Core.Contracts;
 using HCMS.UI.ViewModels.Department;
 using Microsoft.AspNetCore.Mvc;
 
