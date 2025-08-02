@@ -12,11 +12,9 @@ namespace HCMS.Infrastructure.Data.SeedDb
 
         public static async Task SeedAsync(IServiceProvider serviceProvider)
         {
-            using var scope = serviceProvider.CreateScope();
-
-            var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var repository = serviceProvider.GetRequiredService<IRepository>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             if (repository.AllAsReadOnly<Employee>().Any())
             {
